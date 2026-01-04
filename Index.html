@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN DUY PHÚC - Key System</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #000010, #000);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.container {
+  background: rgba(20, 20, 30, 0.9);
+  border: 2px solid #00ffe0;
+  box-shadow: 0 0 30px #00fff2;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  width: 95%;
+  max-width: 380px;
+  backdrop-filter: blur(12px);
+  animation: fadeIn 1.5s ease;
+}
+
+h1 {
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: #00ffe0;
+  text-shadow: 0 0 20px #00ffe0;
+  margin-bottom: 25px;
+}
+
+.key-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin: 15px 0;
+  color: #fff;
+  border: 1px solid #00ffe0;
+  text-shadow: 0 0 8px #00fff2;
+}
+
+button {
+  background: linear-gradient(90deg, #00ffe0, #00aaff);
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #00fff2;
+}
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #00aaff, #00ffe0);
+}
+
+.clock {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Hiệu ứng nền ánh sáng */
+@keyframes bgMove {
+  0% {background-position: 0 0;}
+  100% {background-position: 400% 0;}
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #00ffe0, #0044ff, #ff00ff, #00ffe0);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+  opacity: 0.05;
+  z-index: 0;
+}
+.container, h1, .key-box, button, .clock {position: relative; z-index: 1;}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h1>🌟 ADMIN DUY PHÚC 🌟</h1>
+      <div id="keyDisplay" class="key-box">Đang tải key...</div>
+      <button onclick="copyKey()">📋 Sao chép Key</button>
+      <div class="clock" id="clock"></div>
+    </div>
+  </div>
+
+<script>
+function getKeyFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get("ma");
+  return key ? key : "Chưa có key!";
+}
+
+function copyKey() {
+  const keyText = document.getElementById("keyDisplay").innerText;
+  navigator.clipboard.writeText(keyText);
+  alert("✅ Đã sao chép key: " + keyText);
+}
+
+function updateClock() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString("vi-VN");
+  const dateString = now.toLocaleDateString("vi-VN");
+  document.getElementById("clock").innerText = dateString + " • " + timeString;
+}
+
+document.getElementById("keyDisplay").innerText = getKeyFromURL();
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+</body>
+</html>
